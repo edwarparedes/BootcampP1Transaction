@@ -1,6 +1,7 @@
 package com.nttdata.transaction.controller;
 
 import com.nttdata.transaction.entity.Transaction;
+import com.nttdata.transaction.model.Account;
 import com.nttdata.transaction.service.ITransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -42,5 +43,19 @@ public class TransactionController {
         service.delete(id);
     }
 
+    @GetMapping("/account/{accountId}")
+    public Mono<Account> getAccount(@PathVariable("accountId") String accountId){
+        return service.getAccount(accountId);
+    }
+
+    @PutMapping("/account")
+    Mono<Account> updAccount(@RequestBody Account account){
+        return service.updateAccount(account);
+    }
+
+    @GetMapping("/gettransactionsbyaccount/{accountId}")
+    public Flux<Transaction> getTransactionsByAccount(@PathVariable("accountId") String accountId){
+        return service.findByAccountId(accountId);
+    }
 
 }
